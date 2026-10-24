@@ -1,0 +1,10 @@
+# Configuración por defecto de ktlint para esta config de Neovim.
+# Un .editorconfig dentro del proyecto tiene prioridad sobre estos valores.
+[*.{kt,kts}]
+# Estilo de Android Studio en vez de ktlint_official
+ktlint_code_style = android_studio
+# Indentación de 2 espacios (ktlint por defecto usa 4)
+indent_style = space
+indent_size = 2
+# Los @Composable se nombran en PascalCase (Greeting(), HomeScreen())
+ktlint_function_naming_ignore_when_annotated_with = Composable

@@ -2,6 +2,8 @@
 
 Configuración personal de Neovim **0.12** escrita en Lua. Usa el gestor de plugins nativo **`vim.pack`** (sin lazy.nvim) y la nueva interfaz de mensajes `ui2`.
 
+Está preparada para desarrollo web (JavaScript/TypeScript, HTML, CSS, Astro, Deno), Lua, Python y **Kotlin/Android**. El soporte de Kotlin es opcional: tiene sus propios [requisitos](#kotlin) y se puede [quitar](#quitar-el-soporte-de-kotlin) si no lo necesitas.
+
 El colorscheme es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim), basado en el tema *Dark 2026* de VS Code.
 
 ## Requisitos
@@ -29,6 +31,8 @@ sudo dnf install neovim git ripgrep fd-find xclip wl-clipboard gcc curl tar unzi
 ```
 
 `tree-sitter` CLI y `lazygit` pueden no estar en los repositorios de tu distribución; se instalan desde sus releases de GitHub o con `cargo install tree-sitter-cli`.
+
+Para programar en Kotlin hacen falta además los [requisitos de Kotlin](#requisitos-de-kotlin).
 
 ## Instalación
 
@@ -83,7 +87,8 @@ NVIM_APPNAME=nvim-config nvim
 | [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | Colección de snippets para muchos lenguajes |
 | [lspkind.nvim](https://github.com/onsails/lspkind.nvim) | Íconos para los tipos de sugerencias del autocompletado |
 | [colorful-menu.nvim](https://github.com/xzbdmw/colorful-menu.nvim) | Resaltado de sintaxis dentro del menú de autocompletado |
-| [conform.nvim](https://github.com/stevearc/conform.nvim) | Formateo al guardar (prettierd, stylua, deno fmt) |
+| [conform.nvim](https://github.com/stevearc/conform.nvim) | Formateo al guardar (prettierd, stylua, deno fmt, ktlint) |
+| [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linters que no son LSP: eslint_d en JavaScript/TypeScript y ktlint en Kotlin |
 | [tiny-inline-diagnostic.nvim](https://github.com/rachartier/tiny-inline-diagnostic.nvim) | Muestra los diagnósticos del LSP en línea con mejor formato |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | Lista de diagnósticos, quickfix y location list |
 | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | Resalta y busca comentarios `TODO`, `FIX`, `NOTE`, etc. |
@@ -99,9 +104,117 @@ NVIM_APPNAME=nvim-config nvim
 Mason instala automáticamente:
 
 - **LSP:** astro, bashls, cssls, emmet_ls, html, lua_ls, marksman, pyright, tailwindcss, ts_ls, vimls
-- **Formateadores y linters:** eslint_d, prettier, prettierd, stylua
+- **Formateadores y linters:** eslint_d, ktlint, prettier, prettierd, stylua
 
 `denols` usa el binario `deno` del sistema y solo se activa en proyectos con `deno.json`, `deno.jsonc` o `deno.lock`.
+
+## Kotlin
+
+Pensado para proyectos Kotlin/Android: la edición se hace en Neovim, y la compilación pesada, el debug y los previews de Compose se quedan en Android Studio.
+
+| Función | Herramienta |
+| --- | --- |
+| LSP (autocompletado, ir a definición, diagnósticos, renombrar) | [kotlin-lsp](https://github.com/Kotlin/kotlin-lsp), el servidor oficial de JetBrains |
+| Formateo al guardar y lint | [ktlint](https://github.com/pinterest/ktlint) con estilo de Android Studio e indentación de 2 espacios |
+| Resaltado de sintaxis | Parser `kotlin` de treesitter |
+| Compilar, instalar y probar | Atajos que ejecutan `./gradlew` |
+
+Otros detalles:
+
+- **Estilo de ktlint:** se toma de [`ktlint/editorconfig`](ktlint/editorconfig). Un `.editorconfig` dentro del proyecto tiene prioridad.
+- **Jetpack Compose:** las funciones `@Composable` se pueden nombrar en PascalCase (`HomeScreen()`) sin que ktlint ni kotlin-lsp lo marquen como error.
+- **Rendimiento:** ktlint arranca una JVM en cada ejecución (~0.8 s), así que en Kotlin el formateo corre *después* de guardar (el archivo se vuelve a guardar solo) y el lint espera 1 segundo sin cambios.
+
+| Atajo | Acción |
+| --- | --- |
+| `<leader>kb` | `./gradlew assembleDebug` |
+| `<leader>ki` | `./gradlew installDebug` (dispositivo o emulador) |
+| `<leader>kt` | `./gradlew test` |
+| `<leader>kl` | `./gradlew lint` (Android lint) |
+| `<leader>ks` | Buscar un símbolo en el workspace |
+
+Los comandos de Gradle se ejecutan en una terminal en la parte inferior, desde la carpeta donde está `gradlew`. Los atajos solo existen en archivos Kotlin.
+
+### Requisitos de Kotlin
+
+| Requisito | Uso | Instalación |
+| --- | --- | --- |
+| Java 11 o superior en el `PATH` | ktlint es un programa de Java | `sudo dnf install java-21-openjdk` (Fedora) o el JDK de tu sistema |
+| kotlin-lsp | Servidor LSP | Manual, ver abajo |
+| ktlint | Formateo y lint | Automática con Mason al abrir Neovim |
+| El JDK y el Android SDK que usa tu proyecto | Solo para los atajos de Gradle | Los mismos que usa Android Studio |
+
+kotlin-lsp **no necesita** un Java instalado: trae el suyo.
+
+#### Instalar kotlin-lsp
+
+El paquete de Mason para kotlin-lsp no funciona (su URL de descarga da 404), así que se instala a mano:
+
+1. Descarga el archivo para Linux (`kotlin-server-<versión>.tar.gz`) desde los [releases de kotlin-lsp](https://github.com/Kotlin/kotlin-lsp/releases).
+2. Extráelo en `~/.local/share/kotlin-lsp`:
+   ```sh
+   mkdir -p ~/.local/share/kotlin-lsp
+   tar -xzf ~/Downloads/kotlin-server-*.tar.gz -C ~/.local/share/kotlin-lsp
+   ```
+3. Comprueba que quedó en su lugar:
+   ```sh
+   ls ~/.local/share/kotlin-lsp/kotlin-server-*/bin/intellij-server
+   ```
+
+La config usa la versión más reciente que encuentre en esa carpeta; para actualizar, extrae la nueva versión ahí mismo (puedes borrar la anterior). Si kotlin-lsp no está instalado, Kotlin funciona igual pero sin LSP: sin errores al arrancar.
+
+#### Verificar
+
+Abre un archivo `.kt` dentro de un proyecto Gradle (con `settings.gradle(.kts)` o `build.gradle(.kts)`) y ejecuta:
+
+```vim
+:checkhealth vim.lsp
+```
+
+Debe aparecer `kotlin_lsp` entre los clientes activos. La primera vez kotlin-lsp importa el proyecto de Gradle y puede tardar en mostrar diagnósticos.
+
+### Compatibilidad con otros proyectos
+
+El soporte de Kotlin no causa conflictos con proyectos que no son de Kotlin: todo se activa solo en archivos `.kt` y `.kts`. En otros lenguajes no se inicia kotlin-lsp, no corre ktlint, no se crean los atajos `<leader>k*` y el formateo al guardar funciona igual que sin Kotlin.
+
+### Quitar el soporte de Kotlin
+
+Si no programas en Kotlin, puedes dejarlo como está: nada de esto se activa fuera de archivos `.kt`/`.kts`. Lo único que ocurre es que Mason descarga ktlint y treesitter compila el parser de Kotlin. Si prefieres quitarlo por completo:
+
+1. Borra el archivo de Kotlin y el estilo de ktlint:
+   ```sh
+   rm lua/config/plugins/kotlin.lua
+   rm -r ktlint
+   ```
+2. En `lua/config/plugins.lua`, elimina la línea `require("config.plugins.kotlin")`. Hazlo en el mismo cambio que el paso 1: si el archivo ya no existe pero la línea sigue, Neovim da error al arrancar.
+3. En `lua/config/core/lsp.lua`, elimina el bloque que empieza en el comentario `-- Kotlin:` y termina en el `end` de `if #kotlin_server > 0 then`.
+4. En `lua/config/plugins/conform.lua`, elimina:
+   - la variable `ktlint_editorconfig` y su comentario,
+   - la línea `kotlin = { "ktlint" },`,
+   - el bloque `formatters = { ktlint = { ... } },`.
+5. En `lua/config/plugins/nvim-lint.lua`, elimina:
+   - la línea `kotlin = { "ktlint" },`,
+   - la línea `table.insert(lint.linters.ktlint.args, ...)` y su comentario,
+   - todo el bloque desde el comentario `-- ktlint arranca una JVM...` hasta el final del autocmd de `*.kt`/`*.kts` (el atajo `<leader>l` se queda).
+6. En `lua/config/plugins/lsp/mason.lua`, quita `"ktlint"` de `mason-tool-installer`.
+7. En `lua/config/plugins/treesitter.lua`, quita `"kotlin"` de la lista de parsers.
+8. Abre Neovim y desinstala lo que ya no se usa:
+   ```vim
+   :MasonUninstall ktlint
+   :TSUninstall kotlin
+   ```
+   Y, si lo instalaste, borra kotlin-lsp: `rm -rf ~/.local/share/kotlin-lsp`.
+
+Opcional: en `conform.lua` y `nvim-lint.lua` quedan algunas condiciones `if vim.bo[...].filetype == "kotlin"` que ya no hacen nada. Puedes dejarlas o simplificarlas:
+- en `conform.lua`, reemplaza las funciones `format_on_save` y `format_after_save` por
+  ```lua
+  format_on_save = {
+    lsp_format = "fallback",
+    async = false,
+    timeout_ms = 500,
+  },
+  ```
+- en `nvim-lint.lua`, borra el `if` con el comentario `-- En Kotlin, ktlint va por su propio autocmd`.
 
 ## Estructura
 
@@ -110,6 +223,7 @@ Mason instala automáticamente:
 ├── init.lua                  # Punto de entrada
 ├── nvim-pack-lock.json       # Versiones fijadas de los plugins (vim.pack)
 ├── after/queries/            # Ajustes a queries de treesitter
+├── ktlint/editorconfig       # Estilo por defecto de ktlint
 ├── queries/                  # Queries propias de treesitter
 └── lua/config/
     ├── core/                 # Opciones, atajos, comandos y LSP

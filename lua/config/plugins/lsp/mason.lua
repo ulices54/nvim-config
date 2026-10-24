@@ -38,6 +38,7 @@ require("mason-lspconfig").setup({
 require("mason-tool-installer").setup({
 	ensure_installed = {
 		"eslint_d",
+		"ktlint",
 		"prettier",
 		"prettierd",
 		"stylua",
