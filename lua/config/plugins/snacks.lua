@@ -54,7 +54,10 @@ snacks.setup({
 		-- en Linux se usa la librería que trae cualquier sistema para el historial y la frecuencia
 		db = { sqlite3_path = jit.os == "Linux" and "libsqlite3.so.0" or nil },
 	},
-	lazygit = { enabled = true },
+	lazygit = {
+		enabled = true,
+		configure = false,
+	},
 })
 
 local keymap = vim.keymap

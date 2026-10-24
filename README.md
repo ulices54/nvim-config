@@ -2,6 +2,8 @@
 
 Configuración personal de Neovim **0.12** escrita en Lua. Usa el gestor de plugins nativo **`vim.pack`** (sin lazy.nvim).
 
+Es mi configuración **estable**: vive directamente en `~/.config/nvim` y se usa a diario con Neovim **0.12.6**.
+
 Está preparada para desarrollo web (JavaScript/TypeScript, HTML, CSS, Astro, Deno), Lua, Python y **Kotlin/Android**. El soporte de Kotlin es opcional: tiene sus propios [requisitos](#kotlin) y se puede [quitar](#quitar-el-soporte-de-kotlin) si no lo necesitas.
 
 El colorscheme es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim), basado en el tema *Dark 2026* de VS Code.
@@ -10,7 +12,7 @@ El colorscheme es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim
 
 | Requisito | Uso |
 | --- | --- |
-| [Neovim](https://github.com/neovim/neovim/releases) **>= 0.12** | `vim.pack` solo existe a partir de esta versión |
+| [Neovim](https://github.com/neovim/neovim/releases) **>= 0.12** (probada con 0.12.6) | `vim.pack` solo existe a partir de esta versión |
 | `git` | `vim.pack` clona los plugins con git |
 | Una [Nerd Font](https://www.nerdfonts.com/) | Íconos en el explorador, la statusline, el autocompletado y los diagnósticos |
 | Terminal con *true color* | El colorscheme usa colores de 24 bits (`termguicolors`) |
@@ -90,6 +92,7 @@ NVIM_APPNAME=nvim-config nvim
 | [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linters que no son LSP: eslint_d en JavaScript/TypeScript y ktlint en Kotlin (`<leader>ll` para ejecutarlo a mano) |
 | [tiny-inline-diagnostic.nvim](https://github.com/rachartier/tiny-inline-diagnostic.nvim) | Muestra los diagnósticos del LSP en línea con mejor formato |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | Lista de diagnósticos, quickfix y location list |
+| [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Renderiza Markdown dentro del buffer: encabezados, listas, tablas, bloques de código y casillas (usa los parsers `markdown` y `markdown_inline` de treesitter) |
 | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | Resalta y busca comentarios `TODO`, `FIX`, `NOTE`, etc. |
 | [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) | Librería de funciones Lua (dependencia de todo-comments) |
 | [noice.nvim](https://github.com/folke/noice.nvim) | Línea de comandos flotante y mejor presentación de mensajes |
