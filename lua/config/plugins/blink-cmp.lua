@@ -1,16 +1,11 @@
 vim.pack.add({
-	-- { src = "https://github.com/saghen/blink.lib", version = vim.version.range("^1") },
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/rafamadriz/friendly-snippets" },
 	{ src = "https://github.com/onsails/lspkind.nvim" },
 })
 
--- require("LuaSnip").setup({})
--- require("friendly-snippets").setup({})
--- require("lspkind").setup({})
 local cmp = require("blink.cmp")
--- cmp.build():pwait()
 cmp.setup({
 	appearance = {
 		nerd_font_variant = "mono",
@@ -57,7 +52,6 @@ cmp.setup({
 									icon = dev_icon
 								end
 							else
-								--  TODO: Investigar como resolver este tema para que se muestre correctamente el icono
 								icon = require("lspkind").symbolic(ctx.kind, {
 									mode = "symbol",
 								})
