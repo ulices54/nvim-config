@@ -10,13 +10,12 @@ noice.setup({
 		override = {
 			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 			["vim.lsp.util.stylize_markdown"] = true,
-			["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 		},
 	},
 	presets = {
-		bottom_searh = false,
-		command_palette = true,
-		long_message_to_split = true,
-		lsp_doc_border = true,
+		bottom_search = false, -- la búsqueda (/ y ?) también en popup
+		command_palette = true, -- cmdline y su menú de completado juntos arriba
+		long_message_to_split = true, -- mensajes largos en un split
+		lsp_doc_border = true, -- borde en hover y signature help
 	},
 })

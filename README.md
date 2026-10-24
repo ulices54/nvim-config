@@ -1,6 +1,6 @@
 # Configuración de Neovim 0.12
 
-Configuración personal de Neovim **0.12** escrita en Lua. Usa el gestor de plugins nativo **`vim.pack`** (sin lazy.nvim) y la nueva interfaz de mensajes `ui2`.
+Configuración personal de Neovim **0.12** escrita en Lua. Usa el gestor de plugins nativo **`vim.pack`** (sin lazy.nvim).
 
 Está preparada para desarrollo web (JavaScript/TypeScript, HTML, CSS, Astro, Deno), Lua, Python y **Kotlin/Android**. El soporte de Kotlin es opcional: tiene sus propios [requisitos](#kotlin) y se puede [quitar](#quitar-el-soporte-de-kotlin) si no lo necesitas.
 
@@ -10,7 +10,7 @@ El colorscheme es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim
 
 | Requisito | Uso |
 | --- | --- |
-| [Neovim](https://github.com/neovim/neovim/releases) **>= 0.12** | `vim.pack` y `ui2` solo existen a partir de esta versión |
+| [Neovim](https://github.com/neovim/neovim/releases) **>= 0.12** | `vim.pack` solo existe a partir de esta versión |
 | `git` | `vim.pack` clona los plugins con git |
 | Una [Nerd Font](https://www.nerdfonts.com/) | Íconos en el explorador, la statusline, el autocompletado y los diagnósticos |
 | Terminal con *true color* | El colorscheme usa colores de 24 bits (`termguicolors`) |
