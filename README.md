@@ -88,7 +88,7 @@ NVIM_APPNAME=nvim-config nvim
 | [lspkind.nvim](https://github.com/onsails/lspkind.nvim) | Íconos para los tipos de sugerencias del autocompletado |
 | [colorful-menu.nvim](https://github.com/xzbdmw/colorful-menu.nvim) | Resaltado de sintaxis dentro del menú de autocompletado |
 | [conform.nvim](https://github.com/stevearc/conform.nvim) | Formateo al guardar (prettierd, stylua, deno fmt, ktlint) |
-| [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linters que no son LSP: eslint_d en JavaScript/TypeScript y ktlint en Kotlin |
+| [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linters que no son LSP: eslint_d en JavaScript/TypeScript y ktlint en Kotlin (`<leader>ll` para ejecutarlo a mano) |
 | [tiny-inline-diagnostic.nvim](https://github.com/rachartier/tiny-inline-diagnostic.nvim) | Muestra los diagnósticos del LSP en línea con mejor formato |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | Lista de diagnósticos, quickfix y location list |
 | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | Resalta y busca comentarios `TODO`, `FIX`, `NOTE`, etc. |
@@ -96,6 +96,7 @@ NVIM_APPNAME=nvim-config nvim
 | [noice.nvim](https://github.com/folke/noice.nvim) | Línea de comandos flotante y mejor presentación de mensajes |
 | [nui.nvim](https://github.com/MunifTanjim/nui.nvim) | Componentes de interfaz (dependencia de noice) |
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Muestra los atajos disponibles al presionar una tecla líder |
+| [maximizer.nvim](https://github.com/0x00-ketsu/maximizer.nvim) | Maximizar el split actual y restaurar la distribución (`<leader>mt`, `<leader>mr`) |
 | [auto-session](https://github.com/rmagatti/auto-session) | Guarda sesiones automáticamente y las restaura bajo demanda |
 | [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) | Moverse entre ventanas de Neovim y paneles de tmux con `<C-h/j/k/l>` |
 
@@ -195,7 +196,7 @@ Si no programas en Kotlin, puedes dejarlo como está: nada de esto se activa fue
 5. En `lua/config/plugins/nvim-lint.lua`, elimina:
    - la línea `kotlin = { "ktlint" },`,
    - la línea `table.insert(lint.linters.ktlint.args, ...)` y su comentario,
-   - todo el bloque desde el comentario `-- ktlint arranca una JVM...` hasta el final del autocmd de `*.kt`/`*.kts` (el atajo `<leader>l` se queda).
+   - todo el bloque desde el comentario `-- ktlint arranca una JVM...` hasta el final del autocmd de `*.kt`/`*.kts` (el atajo `<leader>ll` se queda).
 6. En `lua/config/plugins/lsp/mason.lua`, quita `"ktlint"` de `mason-tool-installer`.
 7. En `lua/config/plugins/treesitter.lua`, quita `"kotlin"` de la lista de parsers.
 8. Abre Neovim y desinstala lo que ya no se usa:

@@ -25,8 +25,8 @@ keymap.set("n", "<S-Tab>", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
 -- maximizer
-keymap.set("n", "<leader>mt", '<cmd>lua require("maximizer").toggle()<CR>', { silent = true, noremap = true })
-keymap.set("n", "<leader>mr", '<cmd>lua require("maximizer").restore()<CR>', { silent = true, noremap = true })
+keymap.set("n", "<leader>mt", '<cmd>lua require("maximizer").toggle()<CR>', { silent = true, noremap = true, desc = "Maximize/restore split" })
+keymap.set("n", "<leader>mr", '<cmd>lua require("maximizer").restore()<CR>', { silent = true, noremap = true, desc = "Restore splits" })
 
 -- move lines up or down
 keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves lines down in visual selection" })
