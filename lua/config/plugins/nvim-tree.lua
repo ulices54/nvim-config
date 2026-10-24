@@ -38,9 +38,6 @@ nvimtree.setup({
 				}
 			end,
 		},
-		width = function()
-			return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
-		end,
 	},
 	-- change folder arrow icons
 	renderer = {
