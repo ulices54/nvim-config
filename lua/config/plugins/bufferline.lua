@@ -5,7 +5,6 @@ vim.pack.add({
 local bufferline = require("bufferline")
 
 bufferline.setup({
-	-- highlights = require("catppuccin.special.bufferline").get_theme(),
 	highlights = require("nvim-dark-ide.integrations.bufferline").get(),
 	options = {
 		mode = "tabs",
@@ -24,15 +23,8 @@ bufferline.setup({
 		truncate_names = true, -- whether or not tab names should be truncated
 		tab_size = 21,
 
-		offsets = {
-			{
-				filetype = "NvimTree",
-				text = " Nvim Tree",
-				text_align = "center",
-				separator = true,
-			},
-		},
-
-		separator_style = "slope", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
+		-- Pestañas planas como VS Code; los colores de la integración de nvim-dark-ide
+		-- están pensados para este estilo (con "slant"/"slope" no se dibuja el indicador)
+		separator_style = "thin", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
 	},
 })
