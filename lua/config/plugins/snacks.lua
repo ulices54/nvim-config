@@ -48,7 +48,12 @@ snacks.setup({
 		timeout = 3000,
 	},
 	notify = { enabled = true },
-	picker = { enabled = true },
+	picker = {
+		enabled = true,
+		-- Snacks busca "libsqlite3.so", que solo instala el paquete de desarrollo (sqlite-devel);
+		-- en Linux se usa la librería que trae cualquier sistema para el historial y la frecuencia
+		db = { sqlite3_path = jit.os == "Linux" and "libsqlite3.so.0" or nil },
+	},
 	lazygit = { enabled = true },
 })
 
