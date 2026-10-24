@@ -1,6 +1,5 @@
 vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
-	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/rafamadriz/friendly-snippets" },
 	{ src = "https://github.com/onsails/lspkind.nvim" },
 })
@@ -39,10 +38,16 @@ cmp.setup({
 		menu = {
 			border = "rounded",
 			draw = {
-				treesitter = {
-					"lsp",
-				},
 				components = {
+					-- colorful-menu: resalta label y detalle con la sintaxis del lenguaje
+					label = {
+						text = function(ctx)
+							return require("colorful-menu").blink_components_text(ctx)
+						end,
+						highlight = function(ctx)
+							return require("colorful-menu").blink_components_highlight(ctx)
+						end,
+					},
 					kind_icon = {
 						text = function(ctx)
 							local icon = ctx.kind_icon
@@ -78,7 +83,7 @@ cmp.setup({
 				columns = {
 					{ "kind_icon" },
 					{ "kind" },
-					{ "label", "label_description", gap = 1 },
+					{ "label", gap = 1 },
 				},
 			},
 		},

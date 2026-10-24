@@ -83,8 +83,7 @@ NVIM_APPNAME=nvim-config nvim
 | [mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) | Instala automáticamente formateadores y linters (prettier, stylua, eslint_d) |
 | [lazydev.nvim](https://github.com/folke/lazydev.nvim) | Configura `lua_ls` para la API de Neovim (`vim.*`) al editar la config |
 | [blink.cmp](https://github.com/saghen/blink.cmp) | Autocompletado (LSP, rutas, snippets y buffer) |
-| [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | Motor de snippets |
-| [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | Colección de snippets para muchos lenguajes |
+| [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | Colección de snippets para muchos lenguajes (se expanden con el motor nativo `vim.snippet`) |
 | [lspkind.nvim](https://github.com/onsails/lspkind.nvim) | Íconos para los tipos de sugerencias del autocompletado |
 | [colorful-menu.nvim](https://github.com/xzbdmw/colorful-menu.nvim) | Resaltado de sintaxis dentro del menú de autocompletado |
 | [conform.nvim](https://github.com/stevearc/conform.nvim) | Formateo al guardar (prettierd, stylua, deno fmt, ktlint) |
