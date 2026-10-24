@@ -16,7 +16,7 @@ lualine.setup({
 		},
 		ignore_focus = {},
 		always_divide_middle = true,
-		global_status = false,
+		globalstatus = false,
 		refresh = {
 			statusline = 1000,
 			tabline = 1000,
@@ -28,14 +28,35 @@ lualine.setup({
 			{
 				"mode",
 				icon = "",
-				align = "left",
 				separator = { left = "", right = "" },
 			},
 		},
 		lualine_b = { "branch", "diff", "diagnostics" },
 		lualine_c = { "filename" },
-		lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_x = {
+			-- noice oculta el mensaje "recording @q" (cmdheight = 0), así que se muestra aquí
+			{
+				function()
+					return "recording @" .. vim.fn.reg_recording()
+				end,
+				cond = function()
+					return vim.fn.reg_recording() ~= ""
+				end,
+				color = "WarningMsg",
+			},
+			"encoding",
+			"fileformat",
+			"filetype",
+		},
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},
+})
+
+-- Actualizar la barra al empezar/terminar una macro (lualine refresca cada 1s)
+vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
+	group = vim.api.nvim_create_augroup("LualineRecording", { clear = true }),
+	callback = function()
+		vim.schedule(lualine.refresh)
+	end,
 })
