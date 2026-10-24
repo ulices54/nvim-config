@@ -1,9 +1,7 @@
+-- todo-comments se carga en todo-comments.lua (necesario para `Trouble todo`)
 vim.pack.add({
 	{ src = "https://github.com/folke/trouble.nvim" },
-	{ src = "https://github.com/folke/todo-comments.nvim" },
 })
-
-require("todo-comments").setup({})
 
 require("trouble").setup({
 	focus = true,
