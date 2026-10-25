@@ -56,7 +56,7 @@ snacks.setup({
 	},
 	lazygit = {
 		enabled = true,
-		configure = false,
+		configure = true,
 	},
 })
 
