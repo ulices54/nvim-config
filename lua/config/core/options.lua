@@ -12,7 +12,7 @@ opt.autoindent = true -- copy indent from current line when starting new one
 opt.fillchars:append({ eob = " " })
 -- opt.autocomplete = trus
 
-opt.wrap = false
+opt.wrap = true
 
 -- search settings
 opt.ignorecase = true -- ignore case when searching
@@ -55,3 +55,16 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- deno.lock es JSON pero no se detecta por extensión
 vim.filetype.add({ filename = { ["deno.lock"] = "json" } })
 
+-- Autocomando específico para Markdown
+-- Aplica el wrap a las lineas de un archivo markdown para poder leerlo correctamente
+local markdown_group = vim.api.nvim_create_augroup("MarkdownOptions", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = markdown_group,
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.textwidth = 80
+	end,
+})
