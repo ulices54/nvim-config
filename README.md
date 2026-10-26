@@ -165,6 +165,7 @@ Otros detalles:
 
 - **Estilo de ktlint:** se toma de [`ktlint/editorconfig`](ktlint/editorconfig). Un `.editorconfig` dentro del proyecto tiene prioridad.
 - **Jetpack Compose:** las funciones `@Composable` se pueden nombrar en PascalCase (`HomeScreen()`) sin que ktlint ni kotlin-lsp lo marquen como error.
+- **Imports sin usar:** se ven en gris, como en Android Studio (kotlin-lsp no los reporta). Se detectan buscando el nombre importado en el resto del archivo, así que si solo aparece en un string o un comentario cuenta como usado. Los imports con `*` y los de operadores (`getValue`, `plus`...) nunca se marcan.
 - **Rendimiento:** ktlint arranca una JVM en cada ejecución (~0.8 s), así que en Kotlin el formateo corre *después* de guardar (el archivo se vuelve a guardar solo) y el lint espera 1 segundo sin cambios.
 
 | Atajo | Acción |

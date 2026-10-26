@@ -78,3 +78,24 @@ end, { desc = "Notifications history" })
 keymap.set("n", "<leader>lg", function()
 	Snacks.lazygit()
 end, { desc = "Lazygit" })
+
+-- LSP
+keymap.set("n", "<leader>gd", function()
+	Snacks.picker.lsp_definitions()
+end, { desc = "Goto definition" })
+
+keymap.set("n", "<leader>gD", function()
+	Snacks.picker.lsp_declarations()
+end, { desc = "Goto declaration" })
+
+keymap.set("n", "<leader>gr", function()
+	Snacks.picker.lsp_references()
+end, { desc = "References" })
+
+keymap.set("n", "<leader>gI", function()
+	Snacks.picker.lsp_implementations()
+end, { desc = "Goto implementation" })
+
+keymap.set("n", "<leader>gy", function()
+	Snacks.picker.lsp_type_definitions()
+end, { desc = "Goto T[y]pe Definition" })
