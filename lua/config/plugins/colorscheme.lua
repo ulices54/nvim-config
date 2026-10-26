@@ -30,5 +30,5 @@ require("catppuccin").setup({
 	auto_integrations = true,
 })
 
--- vim.cmd.colorscheme("nvim-dark-ide") -- o "nvim-dark-ide-soft"
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("nvim-dark-ide") -- o "nvim-dark-ide-soft"
+-- vim.cmd.colorscheme("catppuccin")

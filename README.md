@@ -6,7 +6,7 @@ Es mi configuración **estable**: vive directamente en `~/.config/nvim` y se usa
 
 Está preparada para desarrollo web (JavaScript/TypeScript, HTML, CSS, Astro, Deno), Lua, Python y **Kotlin/Android**. El soporte de Kotlin es opcional: tiene sus propios [requisitos](#kotlin) y se puede [quitar](#quitar-el-soporte-de-kotlin) si no lo necesitas.
 
-El colorscheme es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim), basado en el tema *Dark 2026* de VS Code.
+El colorscheme por defecto es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim), basado en el tema *Dark 2026* de VS Code. También está instalado [catppuccin](https://github.com/catppuccin/nvim) con todas sus variantes (ver [Colorschemes](#colorschemes)).
 
 ## Requisitos
 
@@ -67,6 +67,8 @@ NVIM_APPNAME=nvim-config nvim
 | Plugin | Funcionalidad |
 | --- | --- |
 | [nvim-dark-ide.nvim](https://github.com/ulices54/nvim-dark-ide.nvim) | Colorscheme estilo VS Code *Dark 2026* con variante pastel para trabajar de noche |
+| [catppuccin](https://github.com/catppuccin/nvim) | Colorscheme alternativo con sus cuatro variantes (latte, frappe, macchiato, mocha) y configuración personalizada |
+| [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2) (rama `harpoon2`) | Marca archivos para saltar entre ellos rápidamente, con menú para abrirlos en splits o pestañas |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | Dashboard de inicio, buscador de archivos y texto, guías de indentación, notificaciones e integración con lazygit |
 | [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) | Explorador de archivos en panel lateral con estado de git |
 | [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | Íconos por tipo de archivo |
@@ -94,7 +96,7 @@ NVIM_APPNAME=nvim-config nvim
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | Lista de diagnósticos, quickfix y location list |
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Renderiza Markdown dentro del buffer: encabezados, listas, tablas, bloques de código y casillas (usa los parsers `markdown` y `markdown_inline` de treesitter) |
 | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | Resalta y busca comentarios `TODO`, `FIX`, `NOTE`, etc. |
-| [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) | Librería de funciones Lua (dependencia de todo-comments) |
+| [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) | Librería de funciones Lua (dependencia de todo-comments y harpoon) |
 | [noice.nvim](https://github.com/folke/noice.nvim) | Línea de comandos flotante y mejor presentación de mensajes |
 | [nui.nvim](https://github.com/MunifTanjim/nui.nvim) | Componentes de interfaz (dependencia de noice) |
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Muestra los atajos disponibles al presionar una tecla líder |
@@ -110,6 +112,43 @@ Mason instala automáticamente:
 - **Formateadores y linters:** eslint_d, ktlint, prettier, prettierd, stylua
 
 `denols` usa el binario `deno` del sistema y solo se activa en proyectos con `deno.json`, `deno.jsonc` o `deno.lock`.
+
+## Colorschemes
+
+Los dos colorschemes se configuran en `lua/config/plugins/colorscheme.lua`. Por defecto se carga `nvim-dark-ide`; para usar catppuccin, comenta esa línea y descomenta `vim.cmd.colorscheme("catppuccin")`.
+
+| Colorscheme | Variantes |
+| --- | --- |
+| nvim-dark-ide | `nvim-dark-ide`, `nvim-dark-ide-soft` (pastel) |
+| catppuccin | `catppuccin-latte` (claro), `catppuccin-frappe`, `catppuccin-macchiato`, `catppuccin-mocha` |
+
+También se puede cambiar en cualquier momento sin editar la config, por ejemplo `:colorscheme catppuccin-macchiato`.
+
+Configuración personalizada de catppuccin:
+
+- **Variante por defecto:** `mocha`, tanto con `background=dark` como con `background=light` (`:colorscheme catppuccin` siempre usa mocha; las demás variantes se eligen por nombre).
+- **Ventanas inactivas atenuadas:** las ventanas sin foco se oscurecen un 15 % (`dim_inactive`).
+- **Cursivas** en comentarios, condicionales y palabras clave.
+- **Integraciones automáticas** (`auto_integrations`): detecta los plugins instalados (lualine, bufferline, blink.cmp, noice, snacks, trouble, which-key, etc.) y les aplica los colores del tema.
+
+## Harpoon
+
+[Harpoon 2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2) guarda una lista de archivos por proyecto para saltar entre ellos sin buscarlos.
+
+| Atajo | Acción |
+| --- | --- |
+| `<leader>a` | Agregar el archivo actual a la lista |
+| `<C-e>` | Abrir/cerrar el menú con la lista |
+| `<C-S-p>` | Ir al archivo anterior de la lista |
+| `<C-S-n>` | Ir al archivo siguiente de la lista |
+
+Dentro del menú (además de `<CR>` para abrir y editar la lista como un buffer normal para reordenar o borrar entradas):
+
+| Atajo | Acción |
+| --- | --- |
+| `<C-v>` | Abrir en un split vertical |
+| `<C-x>` | Abrir en un split horizontal |
+| `<C-t>` | Abrir en una pestaña nueva |
 
 ## Kotlin
 
