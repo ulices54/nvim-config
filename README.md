@@ -25,6 +25,7 @@ El colorscheme por defecto es [nvim-dark-ide](https://github.com/ulices54/nvim-d
 | [`lazygit`](https://github.com/jesseduffield/lazygit) *(opcional)* | Cliente de git dentro de Neovim (`<leader>lg`) |
 | [`tmux`](https://github.com/tmux/tmux) *(opcional)* | Navegación entre paneles de tmux y ventanas de Neovim |
 | [`deno`](https://deno.com/) *(opcional)* | LSP y formateo en proyectos Deno (se usa el binario del sistema) |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) *(opcional)* | Integración con claudecode.nvim (`<leader>cc`); debe estar en el `PATH` como `claude` |
 
 En Fedora, por ejemplo:
 
@@ -69,6 +70,7 @@ NVIM_APPNAME=nvim-config nvim
 | [nvim-dark-ide.nvim](https://github.com/ulices54/nvim-dark-ide.nvim) | Colorscheme estilo VS Code *Dark 2026* con variante pastel para trabajar de noche |
 | [catppuccin](https://github.com/catppuccin/nvim) | Colorscheme alternativo con sus cuatro variantes (latte, frappe, macchiato, mocha) y configuración personalizada |
 | [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2) (rama `harpoon2`) | Marca archivos para saltar entre ellos rápidamente, con menú para abrirlos en splits o pestañas |
+| [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Integración con Claude Code: terminal en un split, diffs nativos de Neovim para revisar sus cambios y envío de archivos o selecciones como contexto |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | Dashboard de inicio, buscador de archivos y texto, guías de indentación, notificaciones e integración con lazygit |
 | [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) | Explorador de archivos en panel lateral con estado de git |
 | [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | Íconos por tipo de archivo |
@@ -149,6 +151,32 @@ Dentro del menú (además de `<CR>` para abrir y editar la lista como un buffer 
 | `<C-v>` | Abrir en un split vertical |
 | `<C-x>` | Abrir en un split horizontal |
 | `<C-t>` | Abrir en una pestaña nueva |
+
+## Claude Code
+
+[claudecode.nvim](https://github.com/coder/claudecode.nvim) conecta [Claude Code](https://docs.anthropic.com/en/docs/claude-code) con Neovim usando el mismo protocolo que las extensiones de VS Code y JetBrains. Al iniciar, levanta un servidor local y escribe `~/.claude/ide/<puerto>.lock`, que Claude Code usa para encontrarlo.
+
+- Los cambios que propone Claude se abren como **diff vertical de Neovim**: `:w` (o `<leader>ca`) los acepta y `:q` (o `<leader>cd`) los rechaza. La propuesta se puede editar antes de aceptarla.
+- Claude ve el archivo y la selección actuales.
+- Se puede usar desde la terminal integrada (`<leader>cc`, split a la derecha con snacks) o desde una terminal aparte: con Neovim abierto en el proyecto, ejecutar `/ide` dentro de Claude y elegir Neovim.
+
+| Atajo | Acción |
+| --- | --- |
+| `<leader>cc` | Abrir/cerrar Claude en un split |
+| `<M-c>` (Alt+c) | Ocultar/mostrar el panel, también desde dentro de Claude (no termina la sesión) |
+| `<C-h/j/k/l>` | Salir del panel de Claude hacia otra ventana o panel de tmux (dentro de Claude reemplazan a Ctrl+H/J/K/L) |
+| `<leader>cf` | Enfocar la terminal de Claude |
+| `<leader>cr` | Retomar una conversación anterior (`--resume`) |
+| `<leader>cC` | Continuar la última conversación (`--continue`) |
+| `<leader>cm` | Elegir el modelo |
+| `<leader>cb` | Agregar el buffer actual al contexto |
+| `<leader>cs` *(visual)* | Enviar la selección a Claude |
+| `<leader>ca` | Aceptar el diff |
+| `<leader>cd` | Rechazar el diff |
+
+Los `<C-h/j/k/l>` de navegación aplican solo al buffer de Claude, no a otras terminales como lazygit. Dentro de Claude ya no llegan esas teclas (por ejemplo `Ctrl+K`, que borra hasta el final de la línea); `<C-\><C-n>` sigue funcionando para pasar a modo normal.
+
+Si algo no conecta, `:checkhealth claudecode` revisa el CLI, el servidor y el archivo lock.
 
 ## Kotlin
 

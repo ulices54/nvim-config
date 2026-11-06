@@ -6,6 +6,7 @@ require("which-key").setup({
 	preset = "modern",
 	-- Nombres de los grupos de <leader>
 	spec = {
+		{ "<leader>c", group = "Claude Code" },
 		{ "<leader>e", group = "Explorer" },
 		{ "<leader>f", group = "Find" },
 		{ "<leader>k", group = "Kotlin/Gradle" },

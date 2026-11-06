@@ -1,5 +1,6 @@
 require("config.plugins.colorscheme")
 require("config.plugins.snacks")
+require("config.plugins.claudecode")
 require("config.plugins.nvim-tree")
 require("config.plugins.lualine")
 require("config.plugins.autotag")
