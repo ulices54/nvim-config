@@ -126,10 +126,22 @@ Los dos colorschemes se configuran en `lua/config/plugins/colorscheme.lua`. Por 
 
 También se puede cambiar en cualquier momento sin editar la config, por ejemplo `:colorscheme catppuccin-macchiato`.
 
-Configuración personalizada de catppuccin:
+### Transparencia
+
+Los dos temas se configuran con fondo transparente para que se vea el fondo (o el blur) de la terminal, por ejemplo en KDE. Requiere una terminal con transparencia activada; si la terminal es opaca, se ve su color de fondo.
+
+| Elemento | nvim-dark-ide | catppuccin |
+| --- | --- | --- |
+| Editor, números de línea y signos | `transparent = true` | `transparent_background = true` |
+| Ventanas flotantes (nvim-tree, picker, notificaciones y lazygit de snacks) | `on_highlights` quita el fondo de `NormalFloat`, `FloatBorder`, `FloatTitle` y `FloatFooter` | `float.transparent = true` |
+| Menú de autocompletado (blink.cmp) | `on_highlights` quita el fondo de `Pmenu` y los grupos de blink.cmp | Incluido en `transparent_background` |
+
+La línea seleccionada en el autocompletado y en los pickers conserva su color para que se distinga. Para volver a un fondo opaco, pon `transparent = false` en nvim-dark-ide (y quita `on_highlights`) o `transparent_background = false` y `float.transparent = false` en catppuccin.
+
+### Configuración personalizada de catppuccin
 
 - **Variante por defecto:** `mocha`, tanto con `background=dark` como con `background=light` (`:colorscheme catppuccin` siempre usa mocha; las demás variantes se eligen por nombre).
-- **Ventanas inactivas atenuadas:** las ventanas sin foco se oscurecen un 15 % (`dim_inactive`).
+- **Ventanas inactivas sin atenuar:** `dim_inactive` está desactivado porque pinta las ventanas sin foco con un fondo sólido; con transparencia, al abrir una ventana flotante todo el editor de atrás se volvía opaco.
 - **Cursivas** en comentarios, condicionales y palabras clave.
 - **Integraciones automáticas** (`auto_integrations`): detecta los plugins instalados (lualine, bufferline, blink.cmp, noice, snacks, trouble, which-key, etc.) y les aplica los colores del tema.
 
