@@ -3,6 +3,18 @@
 -- y ts_ls se excluye solo en esos proyectos.
 vim.lsp.enable("denols")
 
+-- Rust: rust-analyzer se instala con rustup (`rustup component add rust-analyzer rust-src`),
+-- no con Mason, para que su versión coincida con la del compilador.
+-- Clippy corre a través de rust-analyzer: sus avisos llegan como diagnósticos al guardar.
+vim.lsp.config("rust_analyzer", {
+	settings = {
+		["rust-analyzer"] = {
+			check = { command = "clippy" },
+		},
+	},
+})
+vim.lsp.enable("rust_analyzer")
+
 -- Kotlin: servidor oficial de JetBrains (basado en IntelliJ), instalado a mano en
 -- ~/.local/share/kotlin-lsp porque la URL del paquete de Mason da 404.
 -- Para actualizar: descargar el .tar.gz de https://github.com/Kotlin/kotlin-lsp/releases y extraerlo ahí.

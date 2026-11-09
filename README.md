@@ -4,7 +4,7 @@ Configuración personal de Neovim **0.12** escrita en Lua. Usa el gestor de plug
 
 Es mi configuración **estable**: vive directamente en `~/.config/nvim` y se usa a diario con Neovim **0.12.6**.
 
-Está preparada para desarrollo web (JavaScript/TypeScript, HTML, CSS, Astro, Deno), Lua, Python y **Kotlin/Android**. El soporte de Kotlin es opcional: tiene sus propios [requisitos](#kotlin) y se puede [quitar](#quitar-el-soporte-de-kotlin) si no lo necesitas.
+Está preparada para desarrollo web (JavaScript/TypeScript, HTML, CSS, Astro, Deno), Lua, Python, [Rust](#rust) y **Kotlin/Android**. El soporte de Kotlin es opcional: tiene sus propios [requisitos](#kotlin) y se puede [quitar](#quitar-el-soporte-de-kotlin) si no lo necesitas.
 
 El colorscheme por defecto es [nvim-dark-ide](https://github.com/ulices54/nvim-dark-ide.nvim), basado en el tema *Dark 2026* de VS Code. También está instalado [catppuccin](https://github.com/catppuccin/nvim) con todas sus variantes (ver [Colorschemes](#colorschemes)).
 
@@ -92,7 +92,7 @@ NVIM_APPNAME=nvim-config nvim
 | [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | Colección de snippets para muchos lenguajes (se expanden con el motor nativo `vim.snippet`) |
 | [lspkind.nvim](https://github.com/onsails/lspkind.nvim) | Íconos para los tipos de sugerencias del autocompletado |
 | [colorful-menu.nvim](https://github.com/xzbdmw/colorful-menu.nvim) | Resaltado de sintaxis dentro del menú de autocompletado |
-| [conform.nvim](https://github.com/stevearc/conform.nvim) | Formateo al guardar (prettierd, stylua, deno fmt, ktlint) |
+| [conform.nvim](https://github.com/stevearc/conform.nvim) | Formateo al guardar (prettierd, stylua, deno fmt, ktlint, rustfmt) |
 | [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linters que no son LSP: eslint_d en JavaScript/TypeScript y ktlint en Kotlin (`<leader>ll` para ejecutarlo a mano) |
 | [tiny-inline-diagnostic.nvim](https://github.com/rachartier/tiny-inline-diagnostic.nvim) | Muestra los diagnósticos del LSP en línea con mejor formato |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | Lista de diagnósticos, quickfix y location list |
@@ -113,7 +113,7 @@ Mason instala automáticamente:
 - **LSP:** astro, bashls, cssls, emmet_ls, html, lua_ls, marksman, pyright, tailwindcss, ts_ls, vimls
 - **Formateadores y linters:** eslint_d, ktlint, prettier, prettierd, stylua
 
-`denols` usa el binario `deno` del sistema y solo se activa en proyectos con `deno.json`, `deno.jsonc` o `deno.lock`.
+`denols` usa el binario `deno` del sistema y solo se activa en proyectos con `deno.json`, `deno.jsonc` o `deno.lock`. `rust_analyzer` y `rustfmt` vienen de rustup (ver [Rust](#rust)).
 
 ## Colorschemes
 
@@ -189,6 +189,36 @@ Dentro del menú (además de `<CR>` para abrir y editar la lista como un buffer 
 Los `<C-h/j/k/l>` de navegación aplican solo al buffer de Claude, no a otras terminales como lazygit. Dentro de Claude ya no llegan esas teclas (por ejemplo `Ctrl+K`, que borra hasta el final de la línea); `<C-\><C-n>` sigue funcionando para pasar a modo normal.
 
 Si algo no conecta, `:checkhealth claudecode` revisa el CLI, el servidor y el archivo lock.
+
+## Rust
+
+| Función | Herramienta |
+| --- | --- |
+| LSP (autocompletado, ir a definición, diagnósticos, renombrar) | [rust-analyzer](https://rust-analyzer.github.io/) |
+| Lint | [clippy](https://github.com/rust-lang/rust-clippy), a través de rust-analyzer: los avisos aparecen como diagnósticos al guardar |
+| Formateo al guardar | [rustfmt](https://github.com/rust-lang/rustfmt), a través de conform |
+| Resaltado de sintaxis | Parser `rust` de treesitter |
+
+| Atajo | Acción |
+| --- | --- |
+| `<leader>rr` | `cargo run` |
+| `<leader>rb` | `cargo build` |
+| `<leader>rc` | `cargo check` |
+| `<leader>rt` | `cargo test` |
+| `<leader>rl` | `cargo clippy` |
+| `<leader>rh` | Mostrar u ocultar los inlay hints (tipos inferidos) en el buffer |
+
+Los comandos de Cargo se ejecutan en una terminal en la parte inferior, desde la carpeta del `Cargo.toml`. Los atajos solo existen en archivos Rust.
+
+Clippy necesita un proyecto Cargo (`cargo new`): en un `.rs` suelto hay autocompletado y errores básicos, pero no avisos de clippy.
+
+### Requisitos de Rust
+
+Instala Rust con [rustup](https://rustup.rs/) y agrega los componentes (`rustfmt` y `clippy` vienen en el perfil por defecto):
+
+```sh
+rustup component add rust-analyzer rust-src clippy rustfmt
+```
 
 ## Kotlin
 

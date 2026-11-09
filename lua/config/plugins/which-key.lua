@@ -13,6 +13,7 @@ require("which-key").setup({
 		{ "<leader>l", group = "Lint/Lazygit" },
 		{ "<leader>m", group = "Maximize" },
 		{ "<leader>n", group = "Notifications/Highlights" },
+		{ "<leader>r", group = "Rust/Cargo" },
 		{ "<leader>s", group = "Splits" },
 		{ "<leader>t", group = "Tabs" },
 		{ "<leader>w", group = "Sessions" },

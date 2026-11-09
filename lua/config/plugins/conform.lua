@@ -24,6 +24,7 @@ conform.setup({
     kotlin = { "ktlint" },
     lua = { "stylua" },
     markdown = { "prettier" },
+    rust = { "rustfmt" },
     typescript = deno_or_prettier,
     typescriptreact = deno_or_prettier,
     yaml = { "prettierd" },
